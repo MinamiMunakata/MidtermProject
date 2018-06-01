@@ -31,7 +31,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        getActivity().getSupportFragmentManager().popBackStack();
         GridLayout gridLayout = view.findViewById(R.id.options);
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             Button button = (Button) gridLayout.getChildAt(i);

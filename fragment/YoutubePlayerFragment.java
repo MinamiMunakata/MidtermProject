@@ -34,7 +34,6 @@ public class YoutubePlayerFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        getActivity().getSupportFragmentManager().popBackStack();
         YouTubePlayerSupportFragment fragment = YouTubePlayerSupportFragment.newInstance();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.addToBackStack(null);

@@ -33,9 +33,6 @@ public class ThumbnailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        getActivity().getSupportFragmentManager().popBackStack();
-
         Bundle bundle = getArguments();
         selected = bundle.getString("selected");
         TextView textView = view.findViewById(R.id.hairstyles_for_the_length);

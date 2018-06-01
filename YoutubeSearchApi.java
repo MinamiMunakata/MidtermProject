@@ -3,6 +3,7 @@ package com.personal_project.minami.midtermproject;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
@@ -39,7 +40,7 @@ public class YoutubeSearchApi extends AsyncTask<String , Void, ArrayList> {
     private static String apiKey;
     private final String TAG = "Seach: ";
     private String queryTerm;
-    private static final String SHA1 = "BD:D8:67:64:9B:6F:AE:38:19:23:2A:B9:4B:E4:E3:81:C2:37:F4:BD";
+    private static String SHA1;
     private HashMap<String, String> videoIdAndThumbnails = new HashMap<>();
     private ArrayList<String> videoIdArray = new ArrayList<>();
     private ArrayList<String> thumbnailArray = new ArrayList<>();
@@ -50,8 +51,8 @@ public class YoutubeSearchApi extends AsyncTask<String , Void, ArrayList> {
         this.view = view;
     }
 
-    public static String getApiKey(){
-//        this.context = context;
+    @NonNull
+    private static Properties getProperties() {
         Properties properties  = new Properties();
         AssetManager assetManager = context.getAssets();
         InputStream in = null;
@@ -63,19 +64,31 @@ public class YoutubeSearchApi extends AsyncTask<String , Void, ArrayList> {
                     ": " + e.getCause() + " : " + e.getMessage());
             System.exit(1);
         }
+        return properties;
+    }
+
+    public static String getApiKey(){
+        Properties properties = getProperties();
         apiKey = properties.getProperty("youtube.apikey");
         return apiKey;
     }
 
+    public static String getSHA1(){
+        Properties properties = getProperties();
+        SHA1 = properties.getProperty("youtube.sha1");
+        return SHA1;
+    }
+
     private List<SearchResult> getVideoList() {
-//        youTube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY,
-//                new GoogleCredential()).build();
-        YouTube youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
+        YouTube youTube = new YouTube.Builder(
+                new NetHttpTransport(),
+                new JacksonFactory(),
+                new HttpRequestInitializer() {
             @Override
             public void initialize(HttpRequest request) throws IOException {
                 Log.i(TAG, "initialize: getPackageName-----> " + context.getPackageName());
                 request.getHeaders().set("X-Android-Package", context.getPackageName());
-                request.getHeaders().set("X-Android-Cert", SHA1);
+                request.getHeaders().set("X-Android-Cert", getSHA1());
             }
         }).setApplicationName(String.valueOf(R.string.app_name)).build();
         queryTerm = "hairstyles+for+" + selectedLength + "+hair+easy+and+quick+tutorial";
@@ -126,7 +139,6 @@ public class YoutubeSearchApi extends AsyncTask<String , Void, ArrayList> {
     @Override
     protected  ArrayList doInBackground(String... selected) {
         selectedLength = selected[0];
-
         videoIdAndThumbnailUrl(getVideoList());
         ArrayList<ArrayList> videoIdAndThumbnails = new ArrayList<>();
         videoIdAndThumbnails.add(videoIdArray);
@@ -147,18 +159,4 @@ public class YoutubeSearchApi extends AsyncTask<String , Void, ArrayList> {
             Picasso.get().load(thumbnailArray.get(i)).into(imageButton);
         }
     }
-
-
-    public HashMap<String, String> getVideoIdAndThumbnails() {
-        return videoIdAndThumbnails;
-    }
-
-    public ArrayList<String> getVideoIdArray() {
-        return videoIdArray;
-    }
-
-    public ArrayList<String> getThumbnailArray() {
-        return thumbnailArray;
-    }
-
 }

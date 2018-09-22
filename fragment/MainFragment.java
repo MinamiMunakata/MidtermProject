@@ -40,6 +40,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        ////
         String selectedLength = null;
         selectedLength = String.valueOf(view.getId());
         Log.i(TAG, "onClick: -----------------> " + selectedLength);

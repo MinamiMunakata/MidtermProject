@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -86,7 +85,6 @@ public class YoutubeSearchApi extends AsyncTask<String , Void, ArrayList> {
                 new HttpRequestInitializer() {
             @Override
             public void initialize(HttpRequest request) throws IOException {
-                Log.i(TAG, "initialize: getPackageName-----> " + context.getPackageName());
                 request.getHeaders().set("X-Android-Package", context.getPackageName());
                 request.getHeaders().set("X-Android-Cert", getSHA1());
             }

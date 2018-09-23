@@ -6,4 +6,8 @@ This is the android application which searches for youtube videos about hairstyl
 The app requests **Youtube Data API** to search videos and get results from Youtube, also requests **Youtube Player API** to display videos on the android device.
 
 ## Major Technologies
-Java, Git, Android Studio, REST API, JSON
+- Java
+- Git
+- Android Studio
+- REST API
+- JSON
